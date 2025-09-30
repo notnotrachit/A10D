@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Ticket, ArrowLeft, Send, Check, Calendar, Shield } from 'lucide-react';
+import { Ticket, Send, Calendar, Shield } from 'lucide-react';
 import Link from 'next/link';
 import { CONTRACTS } from '@/lib/contracts';
 import { formatEther } from 'viem';
+import { Header } from '@/components/Header';
 
 export default function MyTicketsPage() {
   const { address } = useAccount();
@@ -42,11 +43,15 @@ export default function MyTicketsPage() {
 
   if (!address) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-center">
-          <Ticket className="h-16 w-16 text-purple-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-4">Connect Your Wallet</h2>
-          <p className="text-gray-400 mb-8">Connect your wallet to view your tickets</p>
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4">
+        <div className="max-w-md text-center space-y-6">
+          <Ticket className="h-12 w-12 mx-auto text-slate-300" />
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">Connect your wallet</h2>
+            <p className="text-slate-400 text-sm">
+              Link a wallet to browse and manage your tickets. We support RainbowKit with MetaMask, WalletConnect, and more.
+            </p>
+          </div>
           <ConnectButton />
         </div>
       </div>
@@ -54,29 +59,25 @@ export default function MyTicketsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <nav className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <ArrowLeft className="h-5 w-5 text-gray-400" />
-              <Ticket className="h-8 w-8 text-purple-500" />
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-                A10D Tickets
-              </span>
-            </Link>
-            <ConnectButton />
+    <div className="min-h-screen bg-slate-950 text-white">
+      <Header />
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="space-y-6 text-left md:text-center">
+          <div className="flex items-center gap-3 text-xs font-medium tracking-[0.3em] uppercase text-slate-500 md:justify-center">
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
+            <span>Your collection</span>
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
           </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-100">
+            Tickets that unlock every experience you care about.
+          </h1>
+          <p className="text-slate-400 text-base md:text-lg max-w-3xl mx-auto">
+            Track ownership, transfer responsibly, and review ticket status—all within a single minimalist dashboard.
+          </p>
         </div>
-      </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">My Tickets</h1>
-          <p className="text-gray-400">Manage your event tickets</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {possibleTokenIds.map((tokenId) => (
             <TicketCard
               key={tokenId}
@@ -167,83 +168,79 @@ function TicketCard({
   };
 
   return (
-    <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <span className="text-xs text-gray-500">Ticket #{tokenId}</span>
-          <h3 className="text-xl font-bold text-white">{name}</h3>
+    <div className="flex h-full flex-col justify-between rounded-xl border border-white/12 bg-slate-950/60 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] transition-colors hover:border-white/30">
+      <div className="space-y-3">
+        <div className="flex items-center justify-between text-xs uppercase tracking-[0.25em] text-slate-500">
+          <span>Ticket {tokenId.toString().padStart(2, '0')}</span>
+          <span className="text-slate-600">Active</span>
         </div>
-        <div className="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-semibold">
-          Active
-        </div>
-      </div>
-      
-      <div className="space-y-2 text-sm mb-4">
-        <div className="flex items-center gap-2 text-gray-400">
-          <Calendar className="h-4 w-4" />
-          <span>{new Date(Number(eventDate) * 1000).toLocaleDateString()}</span>
-        </div>
-        <div className="flex items-center gap-2 text-gray-400">
-          <Shield className="h-4 w-4" />
-          <span>Max {maxTransfers.toString()} transfers</span>
-        </div>
-      </div>
-
-      {/* Transaction Status */}
-      {isPending && (
-        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-400 text-sm">
-          ⏳ Waiting for wallet confirmation...
-        </div>
-      )}
-      {isConfirming && (
-        <div className="mb-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-yellow-400 text-sm">
-          ⏳ Transaction pending...
-        </div>
-      )}
-      {isSuccess && (
-        <div className="mb-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
-          ✅ Transaction confirmed! Refresh to see updates.
-        </div>
-      )}
-
-      {showTransfer ? (
-        <div className="space-y-2">
-          <input
-            type="text"
-            placeholder="Recipient address (0x...)"
-            value={recipientAddress}
-            onChange={(e) => setRecipientAddress(e.target.value)}
-            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-purple-500"
-          />
-          <div className="flex gap-2">
-            <button
-              onClick={handleTransferClick}
-              disabled={isPending || isConfirming}
-              className="flex-1 py-2 px-4 bg-purple-600 rounded-lg text-white hover:bg-purple-700 transition-colors text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isPending || isConfirming ? 'Processing...' : 'Confirm Transfer'}
-            </button>
-            <button
-              onClick={() => setShowTransfer(false)}
-              disabled={isPending || isConfirming}
-              className="flex-1 py-2 px-4 bg-slate-700 rounded-lg text-white hover:bg-slate-600 transition-colors text-sm disabled:opacity-50"
-            >
-              Cancel
-            </button>
+        <h3 className="text-xl font-semibold text-slate-100">{name}</h3>
+        <div className="space-y-2 text-sm text-slate-400">
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            <span>{new Date(Number(eventDate) * 1000).toLocaleDateString()}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Shield className="h-4 w-4" />
+            <span>Max {maxTransfers.toString()} transfers</span>
           </div>
         </div>
-      ) : (
-        <div className="flex gap-2">
+      </div>
+
+      <div className="mt-6 space-y-3 text-sm">
+        {isPending && (
+          <div className="rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-center text-blue-300">
+            Waiting for wallet confirmation…
+          </div>
+        )}
+        {isConfirming && (
+          <div className="rounded-full border border-yellow-400/30 bg-yellow-500/10 px-4 py-2 text-center text-yellow-200">
+            Transaction pending…
+          </div>
+        )}
+        {isSuccess && (
+          <div className="rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2 text-center text-green-300">
+            Transaction confirmed
+          </div>
+        )}
+
+        {showTransfer ? (
+          <div className="space-y-3">
+            <input
+              type="text"
+              placeholder="0xRecipient"
+              value={recipientAddress}
+              onChange={(e) => setRecipientAddress(e.target.value)}
+              className="w-full rounded-full border border-slate-800 bg-slate-900 px-4 py-2 text-sm text-white placeholder-slate-500 focus:border-white/40 focus:outline-none"
+            />
+            <div className="flex gap-3">
+              <button
+                onClick={handleTransferClick}
+                disabled={isPending || isConfirming}
+                className="flex-1 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-white/40 disabled:border-slate-700 disabled:text-slate-500"
+              >
+                {isPending || isConfirming ? 'Processing…' : 'Confirm transfer'}
+              </button>
+              <button
+                onClick={() => setShowTransfer(false)}
+                disabled={isPending || isConfirming}
+                className="flex-1 rounded-full border border-slate-800 px-4 py-2 text-sm font-semibold text-slate-300 hover:border-slate-600 disabled:text-slate-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
           <button
             onClick={() => setShowTransfer(true)}
             disabled={isPending || isConfirming}
-            className="w-full py-2 px-4 bg-purple-600 rounded-lg text-white hover:bg-purple-700 transition-colors text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500"
           >
-            <Send className="h-4 w-4 inline mr-1" />
-            Transfer Ticket
+            <Send className="h-4 w-4" />
+            Start transfer
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

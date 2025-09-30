@@ -1,97 +1,96 @@
 'use client';
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Ticket, Calendar, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Calendar, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { Header } from '@/components/Header';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      {/* Navigation */}
-      <nav className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <Ticket className="h-8 w-8 text-purple-500" />
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-                A10D Tickets
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/events" className="text-gray-300 hover:text-white transition-colors">
-                Events
-              </Link>
-              <Link href="/my-tickets" className="text-gray-300 hover:text-white transition-colors">
-                My Tickets
-              </Link>
-              <Link href="/create" className="text-gray-300 hover:text-white transition-colors">
-                Create Event
-              </Link>
-              <ConnectButton />
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-slate-950 text-white">
+      <Header />
 
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm">
-            <Sparkles className="h-4 w-4" />
-            <span>Powered by Reactive Network</span>
+        <div className="space-y-12 text-left md:text-center">
+          <div className="flex items-center gap-3 text-xs font-medium tracking-[0.4em] uppercase text-slate-400 md:justify-center">
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
+            <span>Reactive Network Native</span>
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
           </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-            Decentralized Event
-            <br />
-            Ticketing Platform
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-slate-100 leading-tight md:leading-[1.1]">
+            The minimalist ticketing stack for organizers who care about experience.
           </h1>
-          
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Anti-scalping, transparent, and secure. Buy and sell event tickets as NFTs with
-            built-in fraud prevention powered by smart contracts.
+
+          <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            Launch events, sell verifiable NFT tickets, and enforce transfer limits automatically. No clutter, no speculation—just a clean flow from creation to entry.
           </p>
 
-          <div className="flex gap-4 justify-center pt-8">
+          <div className="flex flex-col sm:flex-row gap-3 md:justify-center pt-2">
             <Link
               href="/events"
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-semibold text-white hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-950 px-7 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5"
             >
-              Browse Events
+              Explore Events
+              <ArrowUpRight className="h-4 w-4" />
             </Link>
             <Link
               href="/create"
-              className="px-8 py-4 bg-slate-800 rounded-lg font-semibold text-white hover:bg-slate-700 transition-all border border-slate-700"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-800 px-7 py-3 text-sm font-semibold text-slate-200 hover:border-white/30 transition-transform hover:-translate-y-0.5"
             >
-              Create Event
+              Create an Event
             </Link>
+          </div>
+        </div>
+
+        <div className="mt-16 grid gap-6 text-sm text-slate-400 md:grid-cols-3">
+          <div className="rounded-lg border border-white/12 bg-slate-950/60 px-6 py-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+            <span className="text-slate-500 uppercase tracking-[0.25em] text-xs">Realtime</span>
+            <p className="mt-2 text-2xl font-semibold text-slate-100">Sub-second monitoring with Reactive validators</p>
+          </div>
+          <div className="rounded-lg border border-white/12 bg-slate-950/60 px-6 py-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+            <span className="text-slate-500 uppercase tracking-[0.25em] text-xs">Control</span>
+            <p className="mt-2 text-2xl font-semibold text-slate-100">Transfer caps & provenance baked into every ticket</p>
+          </div>
+          <div className="rounded-lg border border-white/12 bg-slate-950/60 px-6 py-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+            <span className="text-slate-500 uppercase tracking-[0.25em] text-xs">Trustless</span>
+            <p className="mt-2 text-2xl font-semibold text-slate-100">Organizer-first workflows with transparent on-chain history</p>
           </div>
         </div>
 
         {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 mt-32">
-          <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-purple-500/50 transition-all">
-            <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
-              <Ticket className="h-6 w-6 text-purple-500" />
+        <div className="mt-28 grid gap-4 md:grid-cols-3">
+          <div className="group rounded-xl border border-white/12 bg-slate-950/60 p-6 transition-colors hover:border-white/30">
+            <div className="flex items-center justify-between text-xs uppercase tracking-[0.25em] text-slate-500">
+              <span>Tickets</span>
+              <span className="text-slate-600 group-hover:text-slate-200">01</span>
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">NFT Tickets</h3>
-            <p className="text-gray-400">Each ticket is a unique, ownable NFT with verifiable authenticity on-chain</p>
+            <h3 className="mt-6 text-2xl font-semibold text-slate-100">NFT-native access</h3>
+            <p className="mt-4 text-sm text-slate-400 leading-relaxed">
+              Mint and distribute ERC-721 tickets that mirror real-world access control with verifiable provenance.
+            </p>
           </div>
 
-          <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-pink-500/50 transition-all">
-            <div className="h-12 w-12 rounded-lg bg-pink-500/10 flex items-center justify-center mb-4">
-              <Calendar className="h-6 w-6 text-pink-500" />
+          <div className="group rounded-xl border border-white/12 bg-slate-950/60 p-6 transition-colors hover:border-white/30">
+            <div className="flex items-center justify-between text-xs uppercase tracking-[0.25em] text-slate-500">
+              <span>Controls</span>
+              <span className="text-slate-600 group-hover:text-slate-200">02</span>
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Transfer Limits</h3>
-            <p className="text-gray-400">Tickets can only be transferred a set number of times to prevent scalping</p>
+            <h3 className="mt-6 text-2xl font-semibold text-slate-100">Transfer ceilings</h3>
+            <p className="mt-4 text-sm text-slate-400 leading-relaxed">
+              Define how many times a ticket can move. Every transfer is counted, enforced, and logged on-chain.
+            </p>
           </div>
 
-          <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 transition-all">
-            <div className="h-12 w-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
-              <Sparkles className="h-6 w-6 text-blue-500" />
+          <div className="group rounded-xl border border-white/12 bg-slate-950/60 p-6 transition-colors hover:border-white/30">
+            <div className="flex items-center justify-between text-xs uppercase tracking-[0.25em] text-slate-500">
+              <span>Monitoring</span>
+              <span className="text-slate-600 group-hover:text-slate-200">03</span>
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Reactive Monitoring</h3>
-            <p className="text-gray-400">All transfers are monitored in real-time by Reactive Network validators</p>
+            <h3 className="mt-6 text-2xl font-semibold text-slate-100">Reactive validators</h3>
+            <p className="mt-4 text-sm text-slate-400 leading-relaxed">
+              Tap into Reactive Network automation that supervises flows and flags anomalous behaviour instantly.
+            </p>
           </div>
         </div>
       </main>
@@ -99,16 +98,16 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex justify-between items-center">
-            <div className="text-gray-400 text-sm">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="text-slate-500 text-sm">
               © 2025 A10D. Built on Ethereum Sepolia & Reactive Network.
             </div>
-            <div className="flex gap-6">
+            <div className="flex gap-6 text-sm">
               <a
                 href="https://sepolia.etherscan.io/address/0x7CF4DA7307AC0213542b6838969058469c412555"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
+                className="text-slate-500 hover:text-slate-200 transition-colors"
               >
                 Contract
               </a>
@@ -116,7 +115,7 @@ export default function Home() {
                 href="https://dev.reactive.network"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
+                className="text-slate-500 hover:text-slate-200 transition-colors"
               >
                 Docs
               </a>

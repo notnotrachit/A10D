@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { useReadContract, useWriteContract, useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { formatEther, parseEther } from 'viem';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Ticket, Calendar, Users, Shield, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Calendar, Users, Shield, ArrowUpRight } from 'lucide-react';
+import { Header } from '@/components/Header';
 import { CONTRACTS } from '@/lib/contracts';
 
 export default function EventsPage() {
@@ -38,30 +37,25 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      {/* Navigation */}
-      <nav className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <ArrowLeft className="h-5 w-5 text-gray-400" />
-              <Ticket className="h-8 w-8 text-purple-500" />
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-                A10D Tickets
-              </span>
-            </Link>
-            <ConnectButton />
+    <div className="min-h-screen bg-slate-950 text-white">
+      <Header />
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="space-y-6 text-left md:text-center">
+          <div className="flex items-center gap-3 text-xs font-medium tracking-[0.35em] uppercase text-slate-500 md:justify-center">
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
+            <span>Curated Listings</span>
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
           </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-100">
+            Discover events built for crypto-native audiences.
+          </h1>
+          <p className="text-slate-400 text-base md:text-lg max-w-3xl mx-auto">
+            Every listing is powered by verifiable NFT tickets, automatic transfer ceilings, and real-time validation from the Reactive Network.
+          </p>
         </div>
-      </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">Browse Events</h1>
-          <p className="text-gray-400">Discover and buy tickets for upcoming events</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {events.map((eventId) => (
             <EventCard
               key={eventId}
@@ -151,54 +145,47 @@ function EventCard({
   const eventTime = new Date(Number(eventDate) * 1000);
 
   return (
-    <div className="group p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-purple-500/50 transition-all">
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold">
-            Event #{eventId.toString()}
-          </span>
-          {soldOut && (
-            <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-semibold">
-              SOLD OUT
-            </span>
-          )}
+    <div className="flex h-full flex-col justify-between rounded-xl border border-white/12 bg-slate-950/70 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] transition-colors hover:border-white/30">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between text-xs uppercase tracking-[0.25em] text-slate-500">
+          <span>Event {eventId.toString().padStart(2, '0')}</span>
+          {soldOut && <span className="text-red-400">Sold out</span>}
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">{name}</h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex items-center gap-2 text-gray-400">
+        <h3 className="text-xl font-semibold text-slate-100">{name}</h3>
+        <div className="space-y-2 text-sm text-slate-400">
+          <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
-            <span>{eventTime.toLocaleDateString()} at {eventTime.toLocaleTimeString()}</span>
+            <span>{eventTime.toLocaleDateString()} · {eventTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
           </div>
-          <div className="flex items-center gap-2 text-gray-400">
+          <div className="flex items-center gap-2">
             <Users className="h-4 w-4" />
             <span>{sold} / {max} tickets sold</span>
           </div>
-          <div className="flex items-center gap-2 text-gray-400">
+          <div className="flex items-center gap-2">
             <Shield className="h-4 w-4" />
             <span>Max {maxTransfers.toString()} transfers</span>
           </div>
         </div>
       </div>
 
-      <div className="pt-4 border-t border-slate-800">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-2xl font-bold text-white">{formatEther(price)} ETH</span>
-          <div className="text-right text-sm text-gray-400">
-            <div>{max - sold} left</div>
-          </div>
+      <div className="mt-8 space-y-4 border-t border-white/10 pt-4">
+        <div className="flex items-end justify-between text-sm">
+          <span className="text-2xl font-semibold text-slate-100">{formatEther(price)} ETH</span>
+          <span className="text-slate-500">{max - sold} remaining</span>
         </div>
 
         {mintSuccess ? (
-          <div className="w-full py-3 px-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-center font-semibold">
-            ✓ Ticket Minted!
+          <div className="w-full rounded-full border border-green-500/30 bg-green-500/10 py-3 text-center text-sm font-semibold text-green-400">
+            Ticket minted
           </div>
         ) : (
           <button
             onClick={() => onMint(eventId, price)}
             disabled={soldOut || isMinting}
-            className="w-full py-3 px-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-purple-600 disabled:hover:to-pink-600"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500 disabled:hover:border-slate-800"
           >
-            {isMinting ? 'Minting...' : soldOut ? 'Sold Out' : 'Buy Ticket'}
+            {isMinting ? 'Processing…' : soldOut ? 'Sold Out' : 'Buy Ticket'}
+            {!soldOut && !isMinting && <ArrowUpRight className="h-4 w-4" />}
           </button>
         )}
       </div>

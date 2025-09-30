@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Ticket, ArrowLeft, Calendar, Users, DollarSign, Shield, Check } from 'lucide-react';
+import { Ticket, Calendar, Users, DollarSign, Shield, Check, ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import { CONTRACTS } from '@/lib/contracts';
 import { parseEther } from 'viem';
+import { Header } from '@/components/Header';
 
 export default function CreateEventPage() {
   const { address } = useAccount();
@@ -42,11 +43,15 @@ export default function CreateEventPage() {
 
   if (!address) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-center">
-          <Ticket className="h-16 w-16 text-purple-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-4">Connect Your Wallet</h2>
-          <p className="text-gray-400 mb-8">Connect your wallet to create an event</p>
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4">
+        <div className="max-w-md text-center space-y-6">
+          <Ticket className="h-12 w-12 mx-auto text-slate-300" />
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">Connect your wallet</h2>
+            <p className="text-slate-400 text-sm">
+              Create and manage events by linking a Reactive Network compatible wallet. RainbowKit supports MetaMask, WalletConnect, and more.
+            </p>
+          </div>
           <ConnectButton />
         </div>
       </div>
@@ -55,18 +60,23 @@ export default function CreateEventPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-center">
-          <div className="h-16 w-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-            <Check className="h-8 w-8 text-green-500" />
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4">
+        <div className="max-w-md text-center space-y-6">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-green-500/40 bg-green-500/10">
+            <Check className="h-6 w-6 text-green-400" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-4">Event Created Successfully!</h2>
-          <p className="text-gray-400 mb-8">Your event is now live on the platform</p>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">Event created</h2>
+            <p className="text-slate-400 text-sm">
+              Your event is now active. Tickets can be minted immediately by your community.
+            </p>
+          </div>
           <Link
             href="/events"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 rounded-lg text-white hover:bg-purple-700 transition-colors"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40"
           >
-            View Events
+            View listings
+            <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
@@ -74,76 +84,63 @@ export default function CreateEventPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <nav className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <ArrowLeft className="h-5 w-5 text-gray-400" />
-              <Ticket className="h-8 w-8 text-purple-500" />
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-                A10D Tickets
-              </span>
-            </Link>
-            <ConnectButton />
+    <div className="min-h-screen bg-slate-950 text-white">
+      <Header />
+
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="space-y-6 text-left md:text-center">
+          <div className="flex items-center gap-3 text-xs font-medium tracking-[0.3em] uppercase text-slate-500 md:justify-center">
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
+            <span>Organizer studio</span>
+            <span className="h-px w-10 bg-slate-800 hidden md:block" />
           </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-100">
+            Publish an event with built-in transfer ceilings and automated monitoring.
+          </h1>
+          <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">
+            Configure capacity, pricing, and transfer allowances in minutes. Reactive Network handles the rest.
+          </p>
         </div>
-      </nav>
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">Create Event</h1>
-          <p className="text-gray-400">Launch your event with built-in anti-scalping protection</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-            <label className="block mb-2">
-              <span className="text-white font-semibold mb-2 flex items-center gap-2">
-                <Ticket className="h-5 w-5 text-purple-500" />
-                Event Name
-              </span>
+        <form onSubmit={handleSubmit} className="mt-16 space-y-8">
+          <div className="rounded-xl border border-white/12 bg-slate-950/60 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+            <label className="block space-y-3">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Event name</span>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                className="w-full rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-white/40 focus:outline-none"
                 placeholder="Web3 Conference 2025"
                 required
               />
             </label>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-              <label className="block">
-                <span className="text-white font-semibold mb-2 flex items-center gap-2">
-                  <Users className="h-5 w-5 text-purple-500" />
-                  Max Tickets
-                </span>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-white/12 bg-slate-950/60 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+              <label className="block space-y-3">
+                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Max tickets</span>
                 <input
                   type="number"
                   value={formData.maxTickets}
                   onChange={(e) => setFormData({ ...formData, maxTickets: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-white/40 focus:outline-none"
                   placeholder="100"
                   required
                 />
               </label>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-              <label className="block">
-                <span className="text-white font-semibold mb-2 flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-purple-500" />
-                  Ticket Price (ETH)
-                </span>
+            <div className="rounded-xl border border-white/12 bg-slate-950/60 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+              <label className="block space-y-3">
+                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Ticket price (ETH)</span>
                 <input
                   type="number"
                   step="0.001"
                   value={formData.price}
                   onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-white/40 focus:outline-none"
                   placeholder="0.1"
                   required
                 />
@@ -151,59 +148,53 @@ export default function CreateEventPage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-              <label className="block">
-                <span className="text-white font-semibold mb-2 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-purple-500" />
-                  Event Date
-                </span>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-white/12 bg-slate-950/60 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+              <label className="block space-y-3">
+                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Event date</span>
                 <input
                   type="datetime-local"
                   value={formData.eventDate}
                   onChange={(e) => setFormData({ ...formData, eventDate: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-white/40 focus:outline-none"
                   required
                 />
               </label>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-              <label className="block">
-                <span className="text-white font-semibold mb-2 flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-purple-500" />
-                  Max Transfers
-                </span>
+            <div className="rounded-xl border border-white/12 bg-slate-950/60 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+              <label className="block space-y-3">
+                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Max transfers</span>
                 <select
                   value={formData.maxTransfers}
                   onChange={(e) => setFormData({ ...formData, maxTransfers: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-purple-500"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-white focus:border-white/40 focus:outline-none"
                 >
-                  <option value="1">1 (No resale)</option>
-                  <option value="2">2 (One resale)</option>
-                  <option value="3">3 (Two resales)</option>
-                  <option value="5">5 (Four resales)</option>
+                  <option value="1">1 · No resale</option>
+                  <option value="2">2 · One resale</option>
+                  <option value="3">3 · Two resales</option>
+                  <option value="5">5 · Four resales</option>
                 </select>
               </label>
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-purple-500/10 border border-purple-500/20">
-            <h3 className="text-white font-semibold mb-2">Anti-Scalping Protection</h3>
-            <ul className="text-sm text-gray-400 space-y-1">
-              <li>• Tickets are limited to {formData.maxTransfers || '3'} transfers</li>
-              <li>• Reactive Network monitors all transfers in real-time</li>
-              <li>• Transfer limits prevent excessive reselling</li>
-              <li>• All transactions are transparent on-chain</li>
+          <div className="rounded-xl border border-white/12 bg-slate-950/60 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Anti-scalping defaults</h3>
+            <ul className="mt-4 space-y-2 text-sm text-slate-400">
+              <li>• Transfer limit capped at {formData.maxTransfers || '3'} moves per ticket</li>
+              <li>• Reactive validators audit transfers in real time</li>
+              <li>• Transparent on-chain history for every ticket</li>
             </ul>
           </div>
 
           <button
             type="submit"
             disabled={isConfirming}
-            className="w-full py-4 px-6 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 font-semibold text-white hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500"
           >
-            {isConfirming ? 'Creating Event...' : 'Create Event'}
+            {isConfirming ? 'Creating event…' : 'Publish event'}
+            {!isConfirming && <ArrowUpRight className="h-4 w-4" />}
           </button>
         </form>
       </main>
