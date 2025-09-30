@@ -104,6 +104,11 @@ function TicketCard({
   onTransfer: (tokenId: number) => void;
   onValidate: (tokenId: number) => void;
 }) {
+  const [showTransfer, setShowTransfer] = useState(false);
+  const [recipientAddress, setRecipientAddress] = useState('');
+  const { writeContract, data: hash, isPending } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
+
   // Check if this token is owned by the user
   const { data: owner, isLoading } = useReadContract({
     ...CONTRACTS.EVENT_TICKET,
@@ -137,6 +142,30 @@ function TicketCard({
 
   const [name, maxTickets, ticketsSold, price, eventDate, active, maxTransfers, organizer] = eventData;
 
+  const handleTransferClick = () => {
+    if (!recipientAddress) {
+      alert('Please enter a recipient address');
+      return;
+    }
+    writeContract({
+      ...CONTRACTS.EVENT_TICKET,
+      functionName: 'transferFrom',
+      args: [ownerAddress, recipientAddress as `0x${string}`, BigInt(tokenId)],
+    });
+    setShowTransfer(false);
+    setRecipientAddress('');
+  };
+
+  const handleValidateClick = () => {
+    if (confirm(`Validate ticket #${tokenId}? This action cannot be undone.`)) {
+      writeContract({
+        ...CONTRACTS.EVENT_TICKET,
+        functionName: 'validateTicket',
+        args: [BigInt(tokenId)],
+      });
+    }
+  };
+
   return (
     <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
       <div className="flex items-start justify-between mb-4">
@@ -160,14 +189,61 @@ function TicketCard({
         </div>
       </div>
 
-      <div className="flex gap-2">
-        <button className="flex-1 py-2 px-4 bg-purple-600 rounded-lg text-white hover:bg-purple-700 transition-colors text-sm">
-          Transfer
-        </button>
-        <button className="flex-1 py-2 px-4 bg-slate-700 rounded-lg text-white hover:bg-slate-600 transition-colors text-sm">
-          Validate
-        </button>
-      </div>
+      {/* Transaction Status */}
+      {isPending && (
+        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-400 text-sm">
+          ⏳ Waiting for wallet confirmation...
+        </div>
+      )}
+      {isConfirming && (
+        <div className="mb-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-yellow-400 text-sm">
+          ⏳ Transaction pending...
+        </div>
+      )}
+      {isSuccess && (
+        <div className="mb-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+          ✅ Transaction confirmed! Refresh to see updates.
+        </div>
+      )}
+
+      {showTransfer ? (
+        <div className="space-y-2">
+          <input
+            type="text"
+            placeholder="Recipient address (0x...)"
+            value={recipientAddress}
+            onChange={(e) => setRecipientAddress(e.target.value)}
+            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-purple-500"
+          />
+          <div className="flex gap-2">
+            <button
+              onClick={handleTransferClick}
+              disabled={isPending || isConfirming}
+              className="flex-1 py-2 px-4 bg-purple-600 rounded-lg text-white hover:bg-purple-700 transition-colors text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isPending || isConfirming ? 'Processing...' : 'Confirm Transfer'}
+            </button>
+            <button
+              onClick={() => setShowTransfer(false)}
+              disabled={isPending || isConfirming}
+              className="flex-1 py-2 px-4 bg-slate-700 rounded-lg text-white hover:bg-slate-600 transition-colors text-sm disabled:opacity-50"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowTransfer(true)}
+            disabled={isPending || isConfirming}
+            className="w-full py-2 px-4 bg-purple-600 rounded-lg text-white hover:bg-purple-700 transition-colors text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Send className="h-4 w-4 inline mr-1" />
+            Transfer Ticket
+          </button>
+        </div>
+      )}
     </div>
   );
 }
