@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { CONTRACTS } from '@/lib/contracts';
 import { formatEther } from 'viem';
 import { Header } from '@/components/Header';
+import { LoadingCard, LoadingSpinner } from '@/components/LoadingSpinner';
 
 export default function MyTicketsPage() {
   const { address } = useAccount();
@@ -131,8 +132,8 @@ function TicketCard({
     query: { enabled: !!ticketEventId },
   });
 
-  // Only render if user owns this token
-  if (isLoading) return null;
+  // Show loading card while checking ownership
+  if (isLoading) return <LoadingCard />;
   if (!owner || owner.toLowerCase() !== ownerAddress.toLowerCase()) {
     return null;
   }

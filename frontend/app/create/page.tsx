@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { CONTRACTS } from '@/lib/contracts';
 import { parseEther } from 'viem';
 import { Header } from '@/components/Header';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 export default function CreateEventPage() {
   const { address } = useAccount();
@@ -193,8 +194,17 @@ export default function CreateEventPage() {
             disabled={isConfirming}
             className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500"
           >
-            {isConfirming ? 'Creating event…' : 'Publish event'}
-            {!isConfirming && <ArrowUpRight className="h-4 w-4" />}
+            {isConfirming ? (
+              <>
+                <LoadingSpinner size="sm" />
+                Creating event…
+              </>
+            ) : (
+              <>
+                Publish event
+                <ArrowUpRight className="h-4 w-4" />
+              </>
+            )}
           </button>
         </form>
       </main>

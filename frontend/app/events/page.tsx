@@ -5,6 +5,7 @@ import { useReadContract, useWriteContract, useAccount, useWaitForTransactionRec
 import { formatEther, parseEther } from 'viem';
 import { Calendar, Users, Shield, ArrowUpRight } from 'lucide-react';
 import { Header } from '@/components/Header';
+import { LoadingCard, LoadingPage } from '@/components/LoadingSpinner';
 import { CONTRACTS } from '@/lib/contracts';
 
 export default function EventsPage() {
@@ -93,10 +94,10 @@ function EventCard({
 
   console.log(`[Event ${eventId}] Query state:`, { isLoading, isError, hasData: !!eventData });
 
-  // Don't render anything while loading
+  // Show loading card while loading
   if (isLoading) {
     console.log(`[Event ${eventId}] Still loading...`);
-    return null;
+    return <LoadingCard />;
   }
 
   // Don't render if there's an error or no data
