@@ -182,7 +182,7 @@ function EventCard({
           <button
             onClick={() => onMint(eventId, price)}
             disabled={soldOut || isMinting}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500 disabled:hover:border-slate-800"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold bg-white cursor-pointer text-black transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500 disabled:hover:border-slate-800"
           >
             {isMinting ? 'Processing…' : soldOut ? 'Sold Out' : 'Buy Ticket'}
             {!soldOut && !isMinting && <ArrowUpRight className="h-4 w-4" />}
