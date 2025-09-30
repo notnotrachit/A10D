@@ -220,7 +220,14 @@ function TicketCard({
                 disabled={isPending || isConfirming}
                 className="flex-1 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-white/40 disabled:border-slate-700 disabled:text-slate-500"
               >
-                {isPending || isConfirming ? 'Processing…' : 'Confirm transfer'}
+                {isPending || isConfirming ? (
+                  <>
+                    <LoadingSpinner size="sm" />
+                    Processing…
+                  </>
+                ) : (
+                  'Confirm transfer'
+                )}
               </button>
               <button
                 onClick={() => setShowTransfer(false)}
@@ -235,10 +242,19 @@ function TicketCard({
           <button
             onClick={() => setShowTransfer(true)}
             disabled={isPending || isConfirming}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-black bg-white transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-black bg-white transition-colors hover:border-white/40 disabled:border-slate-800 disabled:text-slate-500 disabled:bg-slate-800"
           >
-            <Send className="h-4 w-4" />
-            Start transfer
+            {isPending || isConfirming ? (
+              <>
+                <LoadingSpinner size="sm" />
+                Processing…
+              </>
+            ) : (
+              <>
+                <Send className="h-4 w-4" />
+                Start transfer
+              </>
+            )}
           </button>
         )}
       </div>

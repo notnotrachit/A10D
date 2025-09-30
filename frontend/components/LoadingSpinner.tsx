@@ -1,4 +1,4 @@
-export function LoadingSpinner({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
+export function LoadingSpinner({ size = 'md', className = '' }: { size?: 'sm' | 'md' | 'lg'; className?: string }) {
   const sizeClasses = {
     sm: 'h-4 w-4',
     md: 'h-6 w-6',
@@ -6,7 +6,7 @@ export function LoadingSpinner({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   };
 
   return (
-    <div className={`${sizeClasses[size]} animate-spin rounded-full border-2 border-white/20 border-t-white/60`} />
+    <div className={`${sizeClasses[size]} animate-spin rounded-full border-2 border-current/20 border-t-current/60 ${className}`} />
   );
 }
 

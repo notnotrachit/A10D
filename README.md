@@ -40,7 +40,7 @@ The system consists of three main smart contracts deployed across different chai
 │              │ Emits Events                                     │
 │              ▼                                                   │
 │                                                                  │
-│  Reactive Network (Kopli)                                       │
+│  Reactive Network (Lasna)                                       │
 │  ┌────────────────────────────┐                                │
 │  │ TicketReactiveValidator    │  ← Monitors & Validates        │
 │  │   - Event monitoring       │                                │
@@ -88,7 +88,7 @@ The system consists of three main smart contracts deployed across different chai
 - [Foundry](https://book.getfoundry.sh/getting-started/installation)
 - [Git](https://git-scm.com/)
 - Test ETH on Sepolia (or your chosen testnet)
-- Test ETH on Reactive Kopli testnet
+- Test ETH on Reactive Lasna testnet
 
 ### Installation
 
@@ -112,7 +112,7 @@ Edit `.env` with your configuration:
 # Network RPC URLs
 ORIGIN_RPC=https://rpc.sepolia.org
 DESTINATION_RPC=https://rpc.sepolia.org
-REACTIVE_RPC=https://kopli-rpc.rkt.ink
+REACTIVE_RPC=https://lasna-rpc.rnk.dev/
 
 # Private Keys
 ORIGIN_PRIVATE_KEY=your_private_key
@@ -274,12 +274,13 @@ forge coverage
 
 ## 🌐 Network Information
 
-### Reactive Network Kopli Testnet
+### Reactive Network Lasna Testnet
 
-- **RPC URL**: `https://kopli-rpc.rkt.ink`
-- **Chain ID**: `5318008`
-- **Explorer**: https://kopli.reactscan.net/
-- **Faucet**: https://dev.reactive.network/docs/kopli-testnet
+- **RPC URL**: `https://lasna-rpc.rnk.dev/`
+- **Chain ID**: `5318007`
+- **Explorer**: https://lasna.reactscan.net/
+  
+<!-- No public faucet for Lasna, update if available -->
 
 ### Supported Origin/Destination Chains
 
