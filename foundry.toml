@@ -1,0 +1,13 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.26"
+evm_version = "cancun"
+
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC}"
+reactive = "${REACTIVE_RPC}"
+
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
