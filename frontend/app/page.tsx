@@ -19,7 +19,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-slate-100 leading-tight md:leading-[1.1]">
-            The minimalist ticketing stack for organizers who care about experience.
+            Autonomous anti-scalping protocol that protects genuine fans.
           </h1>
 
           <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
