@@ -72,52 +72,26 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-8 mt-32">
           <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-purple-500/50 transition-all">
             <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
-              <ShieldCheck className="h-6 w-6 text-purple-500" />
+              <Ticket className="h-6 w-6 text-purple-500" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Anti-Scalping</h3>
-            <p className="text-gray-400">
-              Transfer limits and price caps prevent scalpers from profiting unfairly.
-            </p>
+            <h3 className="text-xl font-semibold text-white mb-2">NFT Tickets</h3>
+            <p className="text-gray-400">Each ticket is a unique, ownable NFT with verifiable authenticity on-chain</p>
           </div>
 
           <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-pink-500/50 transition-all">
             <div className="h-12 w-12 rounded-lg bg-pink-500/10 flex items-center justify-center mb-4">
-              <Ticket className="h-6 w-6 text-pink-500" />
+              <Calendar className="h-6 w-6 text-pink-500" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">NFT Tickets</h3>
-            <p className="text-gray-400">
-              Each ticket is a unique NFT that you truly own and can transfer securely.
-            </p>
+            <h3 className="text-xl font-semibold text-white mb-2">Transfer Limits</h3>
+            <p className="text-gray-400">Tickets can only be transferred a set number of times to prevent scalping</p>
           </div>
 
           <div className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 transition-all">
             <div className="h-12 w-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
-              <Calendar className="h-6 w-6 text-blue-500" />
+              <Sparkles className="h-6 w-6 text-blue-500" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Real-time Validation</h3>
-            <p className="text-gray-400">
-              Reactive Network monitors transfers and validates tickets automatically.
-            </p>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="grid md:grid-cols-4 gap-8 mt-20 text-center">
-          <div>
-            <div className="text-4xl font-bold text-white">100%</div>
-            <div className="text-gray-400 mt-2">Transparent</div>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-white">0</div>
-            <div className="text-gray-400 mt-2">Hidden Fees</div>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-white">3</div>
-            <div className="text-gray-400 mt-2">Max Transfers</div>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-white">24/7</div>
-            <div className="text-gray-400 mt-2">Monitoring</div>
+            <h3 className="text-xl font-semibold text-white mb-2">Reactive Monitoring</h3>
+            <p className="text-gray-400">All transfers are monitored in real-time by Reactive Network validators</p>
           </div>
         </div>
       </main>

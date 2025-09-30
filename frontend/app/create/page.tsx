@@ -193,7 +193,7 @@ export default function CreateEventPage() {
             <ul className="text-sm text-gray-400 space-y-1">
               <li>• Tickets are limited to {formData.maxTransfers || '3'} transfers</li>
               <li>• Reactive Network monitors all transfers in real-time</li>
-              <li>• Price caps prevent excessive markups</li>
+              <li>• Transfer limits prevent excessive reselling</li>
               <li>• All transactions are transparent on-chain</li>
             </ul>
           </div>

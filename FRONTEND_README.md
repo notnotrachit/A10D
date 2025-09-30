@@ -6,7 +6,7 @@ Modern, beautiful web interface for the A10D decentralized event ticketing platf
 
 - **🎫 Browse Events** - View all available events with real-time ticket availability
 - **💳 Buy Tickets** - Purchase NFT tickets directly from the platform
-- **📱 My Tickets** - Manage your owned tickets and transfers
+- **📱 My Tickets** - Manage and transfer your owned tickets
 - **🎯 Create Events** - Launch events with anti-scalping protection
 - **🔐 Web3 Wallet** - Connect with MetaMask, WalletConnect, and more
 - **⚡ Real-time Updates** - Live transaction status and confirmations

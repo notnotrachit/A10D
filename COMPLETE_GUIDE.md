@@ -19,9 +19,9 @@ A fully functional decentralized event ticketing platform with anti-scalping pro
 
 A10D is a decentralized event ticketing platform that prevents scalping through:
 - **Transfer Limits**: Tickets can only be transferred a maximum number of times
-- **Price Caps**: Resale prices are capped at 10% above original price
 - **Real-time Monitoring**: Reactive Network validates all transfers automatically
 - **NFT Tickets**: Each ticket is a unique, ownable NFT
+- **Transparent On-Chain**: All transactions are verifiable on the blockchain
 
 ### Key Features
 
